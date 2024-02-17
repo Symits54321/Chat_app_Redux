@@ -1,5 +1,7 @@
 // server.js
 
+const chatController = require('./controller/api/chat_api');
+
 const port = 3001;
 
 const express = require('express');
@@ -12,10 +14,29 @@ const app = express();
 const server = http.createServer(app);
 
 
+const { passport, authenticateSocket } = require('./config/passport-local-strategy');
+const path = require('path');
+
+
+
+
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(passport.setAuthenticatedUser);
+
+
+
+
+//Socket
 
 const io = socketIo(server, {
   cors: {
@@ -29,6 +50,18 @@ const io = socketIo(server, {
 io.on('connection', (socket) => {
   console.log('A client connected');
 
+  // Authenticate the socket connection using Passport.js middleware
+  authenticateSocket(socket, (err) => {
+    if (err) {
+      console.error('Socket authentication failed:', err);
+      // Handle authentication failure (e.g., disconnect the socket)
+      socket.disconnect();
+      console.log('A non authenticated client , so disconnected');
+      return;
+    }
+
+//PUBLIC    
+
   // Example: Listen for a 'chat message' event from the client
   socket.on('chat message', (msg) => {
     console.log('Received message from client:', msg);
@@ -40,6 +73,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('A client disconnected');
   });
+
+
+
+//ROOM
 
   // Join a room
   socket.on('joinRoom', (roomId) => {

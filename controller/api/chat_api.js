@@ -33,8 +33,9 @@ module.exports.getuser = async function (req, res) {
     }
 }
 
+module.export
 
-module.exports.createuser = async function (userId,userName) {
+module.exports.createuser = async function (userName,password) {
 
   try {
 
@@ -43,6 +44,8 @@ module.exports.createuser = async function (userId,userName) {
 
             
                 name:userName,
+                password:password
+              
                
                 
          });

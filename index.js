@@ -49,6 +49,9 @@ io.on('connection', (socket) => {
 
 });
 
+
+app.use('/',require('./routes/api/index'));
+
 // Start the server
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {

@@ -33,12 +33,14 @@ io.on('connection', (socket) => {
   // Join a room
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId);
+     //initialise room in mongodb
     console.log(`Client joined room ${roomId}`);
   });
 
   // Handle message events
   socket.on('sendMessage', ({ roomId, message }) => {
     io.to(roomId).emit('roommessage', message);
+    //add message to room to save in mongodb
     console.log(`Message sent to room ${roomId}: ${message}`);
   });
 

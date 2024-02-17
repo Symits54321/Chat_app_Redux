@@ -1,10 +1,21 @@
 // server.js
+
+const port = 3001;
+
 const express = require('express');
 const http = require('http');
+const db = require('./config/mongoose');
+
 const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+
+
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const io = socketIo(server, {
   cors: {
@@ -55,7 +66,7 @@ io.on('connection', (socket) => {
 app.use('/',require('./routes/api/index'));
 
 // Start the server
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || port;
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });

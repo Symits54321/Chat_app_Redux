@@ -33,33 +33,9 @@ module.exports.getuser = async function (req, res) {
     }
 }
 
-module.export
 
-module.exports.createuser = async function (userName,password) {
 
-  try {
 
-  
-         let newuser = await userModel.create({
-
-            
-                name:userName,
-                password:password
-              
-               
-                
-         });
-
-         console.log('New user saved in DB :-' + userName);
-         console.log('Data of new user'+newuser);
-
-      
-
-   } catch (error) {
-
-         console.log('Error in creating user in DB')
-   }
-}
 
 
 module.exports.getroom = async function (req, res) {

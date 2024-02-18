@@ -5,11 +5,11 @@ const LocalStrategy = require('passport-local').Strategy;
 
 // Define the authentication strategy
 passport.use(new LocalStrategy({
-    usernameField: 'name' // Assuming 'name' is used for username field
-}, async function (name, password, done) {
+    usernameField: 'username' // Assuming 'name' is used for username field
+}, async function (username, password, done) {
     try {
         // Find the user in the database
-        const user = await User.findOne({ name: name });
+        const user = await User.findOne({ name: username });
         if (!user || user.password !== password) {
             // User not found or password doesn't match
             return done(null, false);
@@ -17,7 +17,7 @@ passport.use(new LocalStrategy({
         // User authenticated successfully
         return done(null, user);
     } catch (error) {
-        console.error('Error in Passport local strategy:', error);
+        console.log('Error in Passport local strategy:', error);
         return done(error);
     }
 }));

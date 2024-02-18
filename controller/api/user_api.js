@@ -8,9 +8,13 @@ module.exports.signup = async function (req, res) {
         const { username, password } = req.body;
 
         // Check if the username is already taken
-        const existingUser = await userModel.findOne({ name:username });
+        const existingUser = await userModel.findOne({ name:username ,password:password });
         if (existingUser) {
-            return res.status(400).json({ message: 'Username already exists' });
+            return res.status(200).json({
+                message:'Chatroom Loggedin Succesfull',
+                data: existingUser,
+                     
+              });
         }
 
         // Create a new user
@@ -23,14 +27,14 @@ module.exports.signup = async function (req, res) {
 
         // Redirect to login page after successful registration
         return res.status(200).json({
-              
-            CreatedUser: newuser,
-            userId:newuser._id
+            message:'Chatroom SignUp Succesfull',  
+            data: newuser,
+           
           
           });
     } catch (error) {
         console.error('Error in signup:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Error in sign up/loggin' });
     }
 };
 

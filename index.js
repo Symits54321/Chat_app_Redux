@@ -1,6 +1,7 @@
 // server.js
 
 const chatController = require('./controller/api/chat_api');
+const 
 
 const port = 3001;
 
@@ -76,6 +77,8 @@ io.on('connection', (socket) => {
       socket.disconnect();
       console.log('A non authenticated client , so disconnected');
       return;
+    }else{
+      console.log('Authenticated client , '+socket.user.name+'connected');
     }
 
 //PUBLIC    
@@ -100,6 +103,7 @@ io.on('connection', (socket) => {
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId);
      //initialise room in mongodb
+     //create room if not present
     console.log(`Client joined room ${roomId}`);
   });
 
@@ -107,6 +111,7 @@ io.on('connection', (socket) => {
   socket.on('sendMessage', ({ roomId, message }) => {
     io.to(roomId).emit('roommessage', message);
     //add message to room to save in mongodb
+    
     console.log(`Message sent to room ${roomId}: ${message}`);
   });
 

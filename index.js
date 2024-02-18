@@ -4,6 +4,8 @@ const chatController = require('./controller/api/chat_api');
 
 const port = 3001;
 
+
+
 const express = require('express');
 const http = require('http');
 const db = require('./config/mongoose');
@@ -12,13 +14,20 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+
+const session = require('express-session');
 const cors = require('cors'); // Import CORS middleware
 
 
 const { passport, authenticateSocket } = require('./config/passport-local-strategy');
 const path = require('path');
 
-
+// Use express-session middleware
+app.use(session({
+  secret: 'your-secret-key', // Change this to a secret key of your choice
+  resave: false,
+  saveUninitialized: false
+}));
 
 
 
@@ -33,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(passport.setAuthenticatedUser);
+
 
 
 // Use CORS middleware

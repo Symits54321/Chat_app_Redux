@@ -8,7 +8,7 @@ const passport = require('passport');
 
 
 
- router.get('/room',chatcontroller.getroom);
+ router.get('/room',chatController.getroom);
  router.get('/user',chatController.getUser);
 
  router.post('/signup',userController.signup);

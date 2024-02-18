@@ -1,5 +1,7 @@
 const passport = require('passport');
 const User = require('../models/userModel');
+const LocalStrategy = require('passport-local').Strategy;
+
 
 // Define the authentication strategy
 passport.use(new LocalStrategy({
@@ -47,6 +49,11 @@ function authenticateSocket(socket, next) {
         socket.user = user;
         return next();
     })(socket.handshake, {}, next);
+}
+
+function setAuthenticatedUser(req, res, next) {
+    // Set authenticated user logic here, e.g., req.user = authenticatedUser;
+    next();
 }
 
 module.exports = { passport, authenticateSocket };

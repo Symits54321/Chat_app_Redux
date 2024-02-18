@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(passport.setAuthenticatedUser);
+//app.use(passport.setAuthenticatedUser);
 
 
 
@@ -99,11 +99,15 @@ io.on('connection', (socket) => {
 
 });
 
+});
+
 
 app.use('/',require('./routes/api/index'));
 
 // Start the server
 const PORT = process.env.PORT || port;
+
 server.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+

@@ -5,7 +5,7 @@ const roomModel = require('../../models/roomModel');
 
 
 
-module.exports.getuser = async function (req, res) {
+module.exports.getUser = async function (req, res) {
 
   console.log(req.body);
 

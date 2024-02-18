@@ -6,8 +6,7 @@ main().catch(err => console.log("database err"+err));
 async function main(){
  // let url=process.env.MONGO_SERVER_URL;
  const url = 'mongodb://127.0.0.1:27017/myChatdatabase';
-
-    await mongoose.connect (`${url}`);
+    await mongoose.connect(url);
 }
 
  // connect to DB

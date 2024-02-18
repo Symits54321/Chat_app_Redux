@@ -12,6 +12,7 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+const cors = require('cors'); // Import CORS middleware
 
 
 const { passport, authenticateSocket } = require('./config/passport-local-strategy');
@@ -33,6 +34,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 //app.use(passport.setAuthenticatedUser);
 
+
+// Use CORS middleware
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow requests from this origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these methods
+  allowedHeaders: ['Content-Type', 'Authorization'] // Allow these headers
+}));
 
 
 
